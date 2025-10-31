@@ -31,19 +31,19 @@ LangGraphTemplateValidator/
 
 ## Installation
 1. Clone the repository:
-	```
-	git clone <repo-url>
-	cd LangGraphTemplateValidator
-	```
-2. Create and activate a virtual environment:
-	```
-	python -m venv .venv
-	.venv\Scripts\activate  # On Windows
-	```
+    ```
+    git clone <repo-url>
+    cd LangGraphTemplateValidator
+    ```
+2. Create and activate a virtual environment using uv:
+    ```
+    uv venv .venv
+    .venv\Scripts\activate  # On Windows
+    ```
 3. Install dependencies:
-	```
-	pip install -e .
-	```
+    ```
+    uv sync
+    ```
 
 ## Usage
 You can use the validation tools to check templates for common errors. Example usage:

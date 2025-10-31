@@ -6,21 +6,20 @@ This guide will help you set up and run the Supervisor Agent for automation temp
 - Python 3.14+
 - Git
 
-## Setup
 1. **Clone the repository:**
-   ```
-   git clone <repo-url>
-   cd LangGraphTemplateValidator
-   ```
+    ```
+    git clone <repo-url>
+    cd LangGraphTemplateValidator
+    ```
 2. **Create and activate a virtual environment:**
-   ```
-   python -m venv .venv
-   .venv\Scripts\activate  # On Windows
-   ```
-3. **Install dependencies:**
-   ```
-   pip install -e .
-   ```
+    ```
+    python -m venv .venv
+    .venv\Scripts\activate  # On Windows
+    ```
+3. **Install dependencies with UV:**
+    ```
+    uv sync
+    ```
 
 ## Running the Supervisor Agent
 
