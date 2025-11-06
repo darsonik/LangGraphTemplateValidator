@@ -1,7 +1,7 @@
 from langchain.agents import create_agent
-from ai_models.models import chat_llm
-from data_models.agent_data_models import AutomationClassificationAgentResponse, ValidationToolResponse
-from template_validation_tools.validation_tools import validate_template_team_roster, validate_template_invoice, validate_template_meeting_minutes,validate_template_expense_report, validate_template_purchase_order
+from agentic_system.ai_models.models import chat_llm
+from agentic_system.data_models.agent_data_models import AutomationClassificationAgentResponse, ValidationToolResponse
+from agentic_system.template_validation_tools.validation_tools import validate_template_team_roster, validate_template_invoice, validate_template_meeting_minutes,validate_template_expense_report, validate_template_purchase_order
 from langchain_core.tools import tool
 
 # Ideally this metadata would be fetched from a database or external source

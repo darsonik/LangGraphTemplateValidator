@@ -1,9 +1,9 @@
 
 # Import necessary modules and models
 from langchain.agents import create_agent
-from ai_models.models import chat_llm
-from data_models.agent_data_models import ModelToServicenow, ServicenowToModel
-from subagents import classify_automation, validate_automation_template
+from agentic_system.ai_models.models import chat_llm
+from agentic_system.data_models.agent_data_models import ModelToServicenow, ServicenowToModel
+from agentic_system.subagents import classify_automation, validate_automation_template
 
 
 # System prompt for the Supervisor Agent, describing its responsibilities and workflow
@@ -25,29 +25,29 @@ supervisor_agent = create_agent(
 )
 
 
-# Example: Creating a state object and invoking the Supervisor Agent
-state = ServicenowToModel(
-    ticket_number="INC123456",
-    automation_name="Purchase Order Processing for Vendor X",
-    status="Open",
-    requested_by="john.doe@example.com",
-    template_urls=["http://example.com/template1"]
-)
+# # Example: Creating a state object and invoking the Supervisor Agent
+# state = ServicenowToModel(
+#     ticket_number="INC123456",
+#     automation_name="Purchase Order Processing for Vendor X",
+#     status="Open",
+#     requested_by="john.doe@example.com",
+#     template_urls=["http://example.com/template1"]
+# )
 
-# Pass the state information to the agent via a user message
-result = supervisor_agent.invoke({
-    "messages": [{
-        "role": "user",
-        "content": (
-            f"Please process the following ticket:\n"
-            f"Ticket Number: {state.ticket_number}\n"
-            f"Automation Name: {state.automation_name}\n"
-            f"Status: {state.status}\n"
-            f"Requested By: {state.requested_by}\n"
-            f"Template URLs: {', '.join(state.template_urls)}"
-        )
-    }]
-})
+# # Pass the state information to the agent via a user message
+# result = supervisor_agent.invoke({
+#     "messages": [{
+#         "role": "user",
+#         "content": (
+#             f"Please process the following ticket:\n"
+#             f"Ticket Number: {state.ticket_number}\n"
+#             f"Automation Name: {state.automation_name}\n"
+#             f"Status: {state.status}\n"
+#             f"Requested By: {state.requested_by}\n"
+#             f"Template URLs: {', '.join(state.template_urls)}"
+#         )
+#     }]
+# })
 
-# Print the structured response from the Supervisor Agent
-print(result["structured_response"])
+# # Print the structured response from the Supervisor Agent
+# print(result["structured_response"])
