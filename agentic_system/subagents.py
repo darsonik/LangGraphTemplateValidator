@@ -8,7 +8,9 @@ from langchain_core.tools import tool
 AUTOMATION_METADATA = {
     "Roster Automation": "Automates the process of updating and managing team rosters.",
     "Invoice Processing": "Handles the generation, sending, and tracking of invoices.",
-    "Meeting Minutes Automation": "Automates the recording and distribution of meeting minutes."
+    "Meeting Minutes Automation": "Automates the recording and distribution of meeting minutes.",
+    "Purchase Order Processing": "Automates the creation, approval, and tracking of purchase orders.",
+    "Expense Report Automation": "Automates the submission, approval, and reimbursement of expense reports."
 }
 
 AutomationClassificationAgentPrompt = """
