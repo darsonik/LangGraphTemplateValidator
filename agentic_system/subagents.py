@@ -1,14 +1,16 @@
 from langchain.agents import create_agent
-from agentic_system.ai_models.models import chat_llm
-from agentic_system.data_models.agent_data_models import AutomationClassificationAgentResponse, ValidationToolResponse
-from agentic_system.template_validation_tools.validation_tools import validate_template_team_roster, validate_template_invoice, validate_template_meeting_minutes,validate_template_expense_report, validate_template_purchase_order
+from ai_models.models import chat_llm
+from data_models.agent_data_models import AutomationClassificationAgentResponse, ValidationToolResponse
+from template_validation_tools.validation_tools import validate_template_team_roster, validate_template_invoice, validate_template_meeting_minutes,validate_template_expense_report, validate_template_purchase_order
 from langchain_core.tools import tool
 
 # Ideally this metadata would be fetched from a database or external source
 AUTOMATION_METADATA = {
     "Roster Automation": "Automates the process of updating and managing team rosters.",
     "Invoice Processing": "Handles the generation, sending, and tracking of invoices.",
-    "Meeting Minutes Automation": "Automates the recording and distribution of meeting minutes."
+    "Meeting Minutes Automation": "Automates the recording and distribution of meeting minutes.",
+    "Purchase Order Processing": "Automates the creation, approval, and tracking of purchase orders.",
+    "Expense Report Automation": "Automates the submission, approval, and reimbursement of expense reports."
 }
 
 AutomationClassificationAgentPrompt = """

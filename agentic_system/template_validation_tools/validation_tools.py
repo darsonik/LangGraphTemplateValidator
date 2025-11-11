@@ -1,5 +1,5 @@
 from langchain_core.tools import tool
-from agentic_system.data_models.agent_data_models import ModelToServicenow, ValidationToolResponse
+from data_models.agent_data_models import ModelToServicenow, ValidationToolResponse
 
 @tool
 def validate_template_team_roster(template_url: str) -> ValidationToolResponse:

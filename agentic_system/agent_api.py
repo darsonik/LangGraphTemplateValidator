@@ -1,14 +1,13 @@
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from typing import List, Optional
+from typing import List, Optional, Any
 import logging
 
 # Import your existing modules
 from langchain.agents import create_agent
-from agentic_system.ai_models.models import chat_llm
-from agentic_system.data_models.agent_data_models import ModelToServicenow, ServicenowToModel
-from agentic_system.supervisor_agent import supervisor_agent
+from data_models.agent_data_models import ModelToServicenow, ServicenowToModel
+from supervisor_agent import supervisor_agent
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -32,13 +31,13 @@ app.add_middleware(
 
 # Request model for the API
 class TicketRequest(BaseModel):
-    ticket_number: str = Field(..., description="ServiceNow ticket number", example="INC123456")
-    automation_name: str = Field(..., description="Name of the automation template", example="Purchase Order Processing")
+    ticket_number: str = Field(..., description="ServiceNow ticket number")
+    automation_name: str = Field(..., description="Name of the automation template")
     status: str = Field(default="Open", description="Current ticket status")
-    requested_by: str = Field(..., description="Email of the requester", example="john.doe@example.com")
-    template_urls: List[str] = Field(..., description="URLs of automation templates", example=["http://example.com/template1"])
+    requested_by: str = Field(..., description="Email of the requester")
+    template_urls: List[str] = Field(..., description="URLs of automation templates")
 
-    class Config:
+    class ConfigDict:
         json_schema_extra = {
             "example": {
                 "ticket_number": "INC123456",
@@ -52,7 +51,7 @@ class TicketRequest(BaseModel):
 # Response model for the API
 class TicketResponse(BaseModel):
     ticket_number: str
-    result: dict
+    result: List[Any]
     status: str = "processed"
 
 # Health check endpoint
@@ -73,28 +72,50 @@ async def process_ticket(request: TicketRequest):
     2. Creates a state object from the payload
     3. Invokes the Supervisor Agent
     4. Returns the structured response"""
+    try:
+        state = ServicenowToModel(
+        ticket_number=request.ticket_number,
+        automation_name=request.automation_name,
+        status=request.status,
+        requested_by=request.requested_by,
+        template_urls=request.template_urls)
 
-    state = ServicenowToModel(
-    ticket_number=request.ticket_number,
-    automation_name=request.automation_name,
-    status=request.status,
-    requested_by=request.requested_by,
-    template_urls=request.template_urls)
+        # Prepare the message for the agent
+        user_message = (
+                f"Please process the following ticket:\n"
+                f"Ticket Number: {state.ticket_number}\n"
+                f"Automation Name: {state.automation_name}\n"
+                f"Status: {state.status}\n"
+                f"Requested By: {state.requested_by}\n"
+                f"Template URLs: {', '.join(state.template_urls)}"
+            )
 
-    # Prepare the message for the agent
-    user_message = (
-            f"Please process the following ticket:\n"
-            f"Ticket Number: {state.ticket_number}\n"
-            f"Automation Name: {state.automation_name}\n"
-            f"Status: {state.status}\n"
-            f"Requested By: {state.requested_by}\n"
-            f"Template URLs: {', '.join(state.template_urls)}"
+        # invoke the supervisor agent
+        result = supervisor_agent.invoke({
+            "messages":[{
+                "role":"user",
+                "content": user_message
+            }]
+        })
+
+        logger.info(f"Processed ticket {request.ticket_number}")
+
+        logger.info("user message sent to agent:")
+        logger.info(user_message)
+        logger.info(f"Result: {result.get('structured_response', result)}")
+
+        return TicketResponse(
+            ticket_number=request.ticket_number,
+            result=[result.get("structured_response", result)],
+            status="Processed",
         )
-    
-    # invoke the supervisor agent
-    result = supervisor_agent.invoke({
-        "message":[{
-            "role":"user",
-            "content": user_message
-        }]
-    })
+    except Exception as e:
+        logger.error(f"Error processing ticket {request.ticket_number} : {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error processing ticket: {str(e)}"
+        )
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
