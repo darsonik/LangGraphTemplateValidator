@@ -1,0 +1,146 @@
+/* app/page.module.css */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 4rem 1rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 800px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 2.5rem;
+  border: 1px solid #e0e0e0;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #172b4d; /* Atlassian/ServiceNow blue */
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #5e6c84;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.formRow {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #344563;
+  margin-bottom: 0.5rem;
+}
+
+.input,
+.textarea {
+  font-size: 1rem;
+  padding: 0.75rem;
+  border: 1px solid #dfe1e6;
+  border-radius: 4px;
+  background-color: #fafbfc;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: #0052cc;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 1px #0052cc;
+}
+
+.textarea {
+  min-height: 100px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.button {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #0052cc; /* Primary button color */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 1rem;
+}
+
+.button:hover {
+  background-color: #0065ff;
+}
+
+.button:disabled {
+  background-color: #a5adba;
+  cursor: not-allowed;
+}
+
+/* --- Response Boxes --- */
+
+.errorBox {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #ffebe6;
+  border: 1px solid #ffcdd2;
+  color: #bf2600;
+  border-radius: 4px;
+}
+
+.successBox {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #e6fcf5;
+  border: 1px solid #c3e5d0;
+  color: #006644;
+  border-radius: 4px;
+}
+
+.resultBox {
+  margin-top: 1rem;
+  background-color: #f7f7f7;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+}
+
+.resultBox p {
+  font-weight: 600;
+  color: #333;
+}
+
+.resultBox pre {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  color: #172b4d;
+  font-size: 0.875rem;
+}

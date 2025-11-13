@@ -1,12 +1,12 @@
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from typing import List, Optional, Any
+from typing import List, Any
 import logging
 
 # Import your existing modules
 from langchain.agents import create_agent
-from data_models.agent_data_models import ModelToServicenow, ServicenowToModel
+from data_models.agent_data_models import ServicenowToModel
 from supervisor_agent import supervisor_agent
 
 # Configure logging
